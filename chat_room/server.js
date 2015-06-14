@@ -3,11 +3,11 @@ var io = require('socket.io'),
   chatter = require('chatter');
 
 var app = connect().use(connect.static('public')).listen(3000);
-var chat_room = io.listen(app);
+var io = io.listen(app);
 
-chatter.set_sockets(chat_room.sockets);
+chatter.set_sockets(io.sockets);
 
-chat_room.sockets.on('connection', function (socket) {
+io.sockets.on('connection', function (socket) {
   chatter.connect_chatter({
     socket: socket,
     username: socket.id
